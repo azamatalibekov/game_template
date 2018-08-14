@@ -8,17 +8,14 @@ import '../styles/index.css'
 const ratio = window.devicePixelRatio;
 
 // Создаём наш мир
-const world = new World();
+let world = new World();
 
-// Берём размеры экрана
-const logicalWidth = window.innerWidth;
-const logicalHeight = window.innerHeight;
 
 // http://pixijs.download/dev/docs/PIXI.Application.html
-const renderer = PIXI.autoDetectRenderer(
-    logicalWidth,
-    logicalHeight,
-    {backgroundColor: 0x00000, resolution: 2});
+let renderer = PIXI.autoDetectRenderer(
+    window.innerWidth,
+    window.innerHeight,
+    {backgroundColor: 0x000000, resolution: 2});
 
 // Нажата ли кнопка
 const keys = {"w": false, "s": false, "a": false, "d": false};
@@ -53,8 +50,19 @@ document.addEventListener('keyup', (ev) => {
     keys[ev.key] = false;
 }, false);
 
+document.addEventListener('resize', (ev) => {
+    keys[ev.key] = false;
+}, false);
 // Начинаем рисовать!
-animate();
+
+function setCanvasSize() {
+    const canvas = renderer.view;
+    canvas.width = window.innerWidth * 2;
+    canvas.height = window.innerHeight * 2;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    renderer.resize(window.innerWidth, window.innerHeight)
+}
 
 // Wait for document loaded
 window.onload = function () {
@@ -62,9 +70,15 @@ window.onload = function () {
     // View Page Source если не веришь
     document.getElementById("main").appendChild(renderer.view);
     // Устанавливаем нужные параметры высоты и ширины для канваса
-    const canvas = renderer.view;
-    canvas.width = logicalWidth * 2;
-    canvas.height = logicalHeight * 2;
-    canvas.style.width = logicalWidth + 'px';
-    canvas.style.height = logicalHeight + 'px';
+    setCanvasSize();
+    animate();
 };
+
+window.onresize = (ev) => {
+    setCanvasSize();
+};
+
+
+
+
+
