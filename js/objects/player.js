@@ -12,7 +12,7 @@ export class Player {
         // http://pixijs.download/dev/docs/PIXI.Graphics.html
         const graphics = new PIXI.Graphics();
 
-        graphics.beginFill(0xFFFFFF);
+        graphics.beginFill(0xFF0000);
         graphics.drawCircle(this.x, this.y, this.r);
         graphics.endFill();
 
@@ -20,18 +20,18 @@ export class Player {
     }
 
     go_left = () => {
-        this.x -= 1
+        this.x - 20 >= 0 ? this.x -= 10 : null
     };
 
     go_right = () => {
-        this.x += 1
+        this.x+17<=window.innerWidth ? this.x += 10 : null
     };
 
     go_up = () => {
-        this.y -= 1
+        0 <= this.y - 15 ? this.y -= 10 : null
     };
 
     go_down = () => {
-        this.y += 1
+        this.y + 10 <= window.innerHeight ? this.y += 10 : null
     }
 }
